@@ -1,0 +1,24 @@
+import shutil, os
+src = 'crud.txt'
+dst1 = 'crud_copyfile.txt'
+dst2 = 'crud_copy.txt'
+dst3 = 'crud_copy2.txt'
+
+shutil.copyfile(src, dst1) # only copy the content of src to dst
+shutil.copy(src, dst2) # copy the content + permission mode # most used
+shutil.copy(src, dst3) # copy the content + metadata (file's creation and modification time)
+
+# if the destination file hasn't been created, it will be created automatically
+try:
+    with open(dst1, 'r') as f:
+        print(f.read())
+except FileNotFoundError as e:
+    print(e.message)
+
+# check metadata of crud_copy2
+try:
+    with open(dst2, 'r') as f:
+        metadata = os.stat(dst2)
+        print('size: ', metadata.st_size, '\nlast modification: ', metadata.st_mtime)
+except FileNotFoundError as e:
+    print(e.message)
